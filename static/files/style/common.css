@@ -1,36 +1,45 @@
 :root {
-    font-family: sans-serif;
-    font-size: 1rem;
-    color-scheme: light dark;
-    --black: oklch(14.5% 0 0);
-    --grey: oklch(26.9% 0 0);
-    --white: oklch(98.5% 0 0);
-    --orange: oklch(70.5% 0.213 47.604);
-    --red: oklch(63.7% 0.237 25.331);
+  font-family: sans-serif;
+  font-size: 1rem;
+  color-scheme: light dark;
+  --black: oklch(14.5% 0 0);
+  --grey: oklch(26.9% 0 0);
+  --white: oklch(98.5% 0 0);
+  --orange: oklch(70.5% 0.213 47.604);
+  --red: oklch(63.7% 0.237 25.331);
 
-    --transition-duration: 150ms; /* if only it were that fast... */
+  --transition-duration: 150ms; /* if only it were that fast... */
 
-    background-color: light-dark(var(--white), var(--grey));
-    color: light-dark(var(--black), var(--white));
+  background-color: light-dark(var(--white), var(--grey));
+  color: light-dark(var(--black), var(--white));
 }
 
 .card {
-    padding: 1rem;
-    border: none;
-    background-color: color-mix(in srgb, light-dark(var(--black), var(--white)) 10%, transparent);
-    border-radius: .5rem;
+  padding: 1rem;
+  border: none;
+  background-color: color-mix(
+    in srgb,
+    light-dark(var(--black), var(--white)) 10%,
+    transparent
+  );
+  border-radius: 0.5rem;
 }
 
-h1, h2 {
-    text-align: center;
-    font-size: 1.2rem;
+h1,
+h2 {
+  text-align: center;
+  font-size: 1.2rem;
 }
 
 .grid {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 100%;
-    gap: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 1rem;
+}
+
+* {
+  box-sizing: border-box;
 }

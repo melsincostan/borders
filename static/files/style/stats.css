@@ -3,8 +3,8 @@
 @import url("/static/style/table-common.css");
 
 .card {
-    width: fit-content;
-    max-width: 90vw;
-    overflow-x: scroll;
-    margin: auto;
+  width: fit-content;
+  max-width: 90vw;
+  overflow-x: scroll;
+  margin: auto;
 }

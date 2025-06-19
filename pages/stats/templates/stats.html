@@ -4,13 +4,17 @@
     <meta charset="UTF-8" />
     <meta property="og:title" content="{{ .OGTitle }}" />
     <meta property="og:type" content="website" />
-    <meta property="og:description" content="Out of {{ .TotalCrossings }} border crossings, {{ printf "%.1f" .CrossingCheckPer}}% of them ({{ .TotalBorderChecks }}) involved a border check." />
+    <meta property="og:description" content="Out of {{ .TotalCrossings }} border
+    crossings, {{ printf "%.1f" .CrossingCheckPer}}% of them ({{
+    .TotalBorderChecks }}) involved a border check." />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Borders - Statistics</title>
     <link rel="stylesheet" href="/static/style/stats.css" />
   </head>
   <body>
-    <a href="/admin" class="adm">administration</a>
+    <div class="adm-flex">
+      <a href="/admin" class="adm">administration</a>
+    </div>
     <main>
       <h1>Border crossing statistics</h1>
       <div class="card">
