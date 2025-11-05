@@ -72,7 +72,9 @@ func createCrossing(db *gorm.DB, base string) gin.HandlerFunc {
 			ctx.AbortWithStatusJSON(http.StatusInternalServerError, utils.ErrJSON("couldn't create crossing"))
 			return
 		}
+		stats.ExpiryLock.Lock()
 		stats.Expiry = time.Now().Add(-5 * time.Second)
+		stats.ExpiryLock.Unlock()
 		ctx.Redirect(http.StatusFound, fmt.Sprintf("%s?msg=1", base))
 	}
 }

@@ -2,6 +2,7 @@ package stats
 
 import (
 	"net/http"
+	"sync"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -27,13 +28,16 @@ type statsObj struct {
 
 var cache *statsObj
 var Expiry time.Time
+var ExpiryLock sync.RWMutex
 
 const expiryDelay = 15 * time.Minute
 
 func show(db *gorm.DB, ogtitle string) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		if cache == nil || time.Now().After(Expiry) {
-
+		ExpiryLock.RLock()
+		expired := time.Now().After(Expiry)
+		ExpiryLock.RUnlock()
+		if cache == nil || expired {
 			stats, err := crossing.GetStats(db)
 			if err != nil {
 				ctx.Error(err)
@@ -55,7 +59,9 @@ func show(db *gorm.DB, ogtitle string) gin.HandlerFunc {
 				return
 			}
 
+			ExpiryLock.Lock()
 			Expiry = time.Now().Add(expiryDelay)
+			ExpiryLock.Unlock()
 			cache = &statsObj{
 				Stats:                *stats,
 				CrossingCheckPer:     float32(stats.TotalBorderChecks) / float32(stats.TotalCrossings) * (100),
