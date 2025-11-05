@@ -21,13 +21,16 @@ func delete(db *gorm.DB, base, modelType string) gin.HandlerFunc {
 			return
 		}
 
+		var msg uint
 		if modelType == "country" {
+			msg = 3
 			if err := country.Delete(db, idp.ID); err != nil {
 				ctx.Error(err)
 				ctx.AbortWithStatusJSON(http.StatusInternalServerError, utils.ErrJSON("could not delete country"))
 				return
 			}
 		} else if modelType == "transport" {
+			msg = 6
 			if err := transport.Delete(db, idp.ID); err != nil {
 				ctx.Error(err)
 				ctx.AbortWithStatusJSON(http.StatusInternalServerError, utils.ErrJSON("could not delete transport"))
@@ -39,6 +42,6 @@ func delete(db *gorm.DB, base, modelType string) gin.HandlerFunc {
 			return
 		}
 
-		ctx.Redirect(http.StatusFound, base)
+		ctx.Redirect(http.StatusFound, fmt.Sprintf("%s?msg=%d", base, msg))
 	}
 }

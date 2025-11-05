@@ -92,6 +92,6 @@ func changePW(db *gorm.DB, base string) gin.HandlerFunc {
 			}
 			return
 		}
-		ctx.Redirect(http.StatusFound, base)
+		ctx.Redirect(http.StatusFound, fmt.Sprintf("%s?msg=%d", base, 5))
 	}
 }

@@ -9,6 +9,13 @@
     <script src="/static/script/passwordConfirm.js"></script>
   </head>
   <body>
+    {{ if ne .Message ""}}
+    <div class="msg">
+      {{.Message}}
+    </div>
+    {{else}}
+    No Message
+    {{end}}
     <a href="{{ .Logout }}" class="adm">log out</a>
     <h1>Add a border crossing</h1>
     <form

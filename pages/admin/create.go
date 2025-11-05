@@ -22,7 +22,9 @@ func create(db *gorm.DB, base, modelType string) gin.HandlerFunc {
 			return
 		}
 
+		var msg uint
 		if modelType == "country" {
+			msg = 2
 			if _, err := country.Create(db, models.CountryBase{
 				Name: edp.Name,
 			}); err != nil {
@@ -31,6 +33,7 @@ func create(db *gorm.DB, base, modelType string) gin.HandlerFunc {
 				return
 			}
 		} else if modelType == "transport" {
+			msg = 4
 			if _, err := transport.Create(db, models.TransportBase{
 				Name: edp.Name,
 			}); err != nil {
@@ -44,6 +47,6 @@ func create(db *gorm.DB, base, modelType string) gin.HandlerFunc {
 			return
 		}
 
-		ctx.Redirect(http.StatusFound, base)
+		ctx.Redirect(http.StatusFound, fmt.Sprintf("%s?msg=%d", base, msg))
 	}
 }

@@ -2,6 +2,7 @@ package admin
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 
@@ -26,12 +27,17 @@ type adminObj struct {
 	Logout           string
 	ManageCountries  manageObj[models.Country]
 	ManageTransports manageObj[models.Transport]
+	Message          string
 }
 
 type manageObj[T manageable] struct {
 	Items []T
 	Base  string
 	Type  string
+}
+
+type msg struct {
+	MsgNumber uint `form:"msg"`
 }
 
 func main(db *gorm.DB, base string) gin.HandlerFunc {
@@ -53,6 +59,11 @@ func main(db *gorm.DB, base string) gin.HandlerFunc {
 			ctx.AbortWithStatusJSON(http.StatusInternalServerError, utils.ErrJSON("could not load transports"))
 		}
 
+		var msgp msg
+		if err := ctx.ShouldBindQuery(&msgp); err != nil {
+			log.Printf("Error parsing message number param on admin page: %s", err.Error())
+		}
+
 		ctx.HTML(http.StatusOK, "admin.html", adminObj{
 			ManageCountries: manageObj[models.Country]{
 				Items: countries,
@@ -70,6 +81,7 @@ func main(db *gorm.DB, base string) gin.HandlerFunc {
 			BorderValue:    borderValue,
 			PapersValue:    papersValue,
 			Logout:         logout,
+			Message:        messages[msgp.MsgNumber],
 		})
 	}
 }

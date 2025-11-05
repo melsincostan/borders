@@ -72,7 +72,7 @@ func createCrossing(db *gorm.DB, base string) gin.HandlerFunc {
 			return
 		}
 
-		ctx.Redirect(http.StatusFound, base)
+		ctx.Redirect(http.StatusFound, fmt.Sprintf("%s?msg=1", base))
 	}
 }
 
