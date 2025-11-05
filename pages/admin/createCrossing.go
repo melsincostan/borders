@@ -10,6 +10,7 @@ import (
 	"github.com/melsincostan/borders/auth"
 	"github.com/melsincostan/borders/db/crossing"
 	"github.com/melsincostan/borders/db/models"
+	"github.com/melsincostan/borders/pages/stats"
 	"github.com/melsincostan/borders/utils"
 	"gorm.io/gorm"
 )
@@ -71,7 +72,7 @@ func createCrossing(db *gorm.DB, base string) gin.HandlerFunc {
 			ctx.AbortWithStatusJSON(http.StatusInternalServerError, utils.ErrJSON("couldn't create crossing"))
 			return
 		}
-
+		stats.Expiry = time.Now().Add(-5 * time.Second)
 		ctx.Redirect(http.StatusFound, fmt.Sprintf("%s?msg=1", base))
 	}
 }
