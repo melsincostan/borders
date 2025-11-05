@@ -7,14 +7,13 @@
     <link rel="stylesheet" href="/static/style/admin.css" />
     <script src="/static/script/ensureCheck.js"></script>
     <script src="/static/script/passwordConfirm.js"></script>
+    <script src="/static/script/notification.js"></script>
   </head>
   <body>
     {{ if ne .Message ""}}
-    <div class="msg">
+    <div class="msg" id="notification">
       {{.Message}}
     </div>
-    {{else}}
-    No Message
     {{end}}
     <a href="{{ .Logout }}" class="adm">log out</a>
     <h1>Add a border crossing</h1>
