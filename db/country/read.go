@@ -11,7 +11,7 @@ const (
 
 func Read(db *gorm.DB) (res []models.Country, err error) {
 	res = []models.Country{}
-	if err := db.Model(&models.Country{}).Scan(&res).Error; err != nil {
+	if err := db.Model(&models.Country{}).Order("name asc").Scan(&res).Error; err != nil {
 		return nil, err
 	}
 	return
